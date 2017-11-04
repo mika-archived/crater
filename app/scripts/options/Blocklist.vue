@@ -59,9 +59,7 @@ export default {
   methods: {
     onClick(data) {
       chrome.storage.local.get("blocks", value => {
-        console.log(data);
         value.blocks = value.blocks.filter(w => w !== data.item.hostname);
-        console.log(value);
         chrome.storage.local.set(value, () => {
           this.load();
         });
