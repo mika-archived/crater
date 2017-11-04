@@ -3,7 +3,7 @@
     <section>
       <h2>Creter について</h2>
       <p>
-        Crater は、フォームに入力した値を、自動で保存・復元することが出来る拡張機能です。
+        Crater は、Faucet (蛇口) 巡りを便利にするための拡張機能です。 保存しているデータに対して
         <b>暗号化は行っていません。</b>
       </p>
     </section>
@@ -44,6 +44,7 @@ export default {
         },
         { name: "jsSHA", link: "https://github.com/Caligatio/jsSHA" },
         { name: "lodash.sortby", link: "https://github.com/lodash/lodash" },
+        { name: "lodash.uniq", link: "https://github.com/lodash/lodash" },
         { name: "Vue.js", link: "https://github.com/vuejs/vue" },
         { name: "vue-router", link: "https://github.com/vuejs/vue-router" }
       ]

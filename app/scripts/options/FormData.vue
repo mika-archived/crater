@@ -44,22 +44,22 @@ export default {
           url: { label: "URL" },
           status: { label: "状態" },
           data: { label: "入力データ" },
-          actions: { label: "*" }
+          actions: { label: "" }
         },
         items: []
       }
     };
   },
   methods: {
-    onClick: function(data) {
+    onClick(data) {
       chrome.storage.local.remove(data.item.key, () => this.load());
     },
-    load: function() {
+    load() {
       this.stores.items = [];
       const array = [];
       chrome.storage.local.get(items => {
         for (const key of Object.keys(items)) {
-          if (key === versionHash || key === "version") {
+          if (key === versionHash || key === "version" || key === "blocks") {
             continue;
           }
           const value = JSON.parse(

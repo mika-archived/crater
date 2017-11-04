@@ -6,9 +6,9 @@ import Router from 'vue-router'
 
 import App from './options/App.vue'
 import About from './options/About.vue'
-import Blacklist from './options/Blacklist.vue'
+import Blocklist from './options/Blocklist.vue'
+import FormData from './options/FormData.vue'
 import Index from './options/Index.vue'
-import Store from './options/Store.vue'
 
 Vue.use(BootstrapVue)
 Vue.use(Router)
@@ -21,14 +21,14 @@ const router = new Router({
       component: Index
     },
     {
-      path: '/store',
-      name: 'Store',
-      component: Store
+      path: '/form-data',
+      name: 'FormData',
+      component: FormData
     },
     {
-      path: '/blacklist',
-      name: 'Blacklist',
-      component: Blacklist
+      path: '/blocklist',
+      name: 'Blocklist',
+      component: Blocklist
     },
     {
       path: '/about',

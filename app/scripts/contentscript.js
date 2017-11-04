@@ -205,12 +205,32 @@ if (form) {
       data[w.name] = w.value
     })
     logger(selector)
+    logger(`Captured form data => ${JSON.stringify(data)}`)
     if (Object.keys(data).length > 0 && url !== '') {
-      load(url, (key, value) => {
-        if (!value && value !== '') {
-          save(url, JSON.stringify({ status: 0, data, url }), () => { })          
-        }
-      })
+      save(url, JSON.stringify({ status: 0, data, url }), () => { })
     }
   })
 }
+
+chrome.storage.local.get("blocks", value => {
+  if (value && value["blocks"]) {
+    if (value["blocks"].indexOf(location.hostname) > -1) {
+      logger('Blocklist enabled on this site. Running...')
+      function beforeUnload(event) {
+        event.returnValue = "OK";
+        return "OK"
+      }
+      window.addEventListener("beforeunload", beforeUnload)
+
+      if (form) {
+        form.addEventListener('submit', () => {
+          window.removeEventListener("beforeunload", beforeUnload);
+        })
+      }
+
+      window.addEventListener("click", (event) => {
+        console.log(event)
+      })
+    }
+  }
+})
