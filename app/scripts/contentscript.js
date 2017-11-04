@@ -207,7 +207,12 @@ if (form) {
     logger(selector)
     logger(`Captured form data => ${JSON.stringify(data)}`)
     if (Object.keys(data).length > 0 && url !== '') {
-      save(url, JSON.stringify({ status: 0, data, url }), () => { })
+      load(url, (key, value) => {
+        let json = parse(key, value)
+        if (Object.keys(json).length === 0) {
+          save(url, JSON.stringify({ status: 0, data, url }), () => { })
+        }
+      })
     }
   })
 }
