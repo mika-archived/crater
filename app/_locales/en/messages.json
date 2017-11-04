@@ -1,0 +1,18 @@
+{
+  "appName": {
+    "message": "crater",
+    "description": "The name of the application"
+  },
+  "appShortName": {
+    "message": "crater",
+    "description": "The short_name (maximum of 12 characters recommended) is a short version of the app's name."
+  },
+  "appDescription": {
+    "message": "Chrome Extension that auto-fill form values.",
+    "description": "The description of the application"
+  },
+  "browserActionTitle": {
+    "message": "crater",
+    "description": "The title of the browser action button"
+  }
+}

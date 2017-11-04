@@ -1,0 +1,68 @@
+// https://www.w3schools.com/howto/howto_js_snackbar.asp
+#crater-alert {
+  visibility: hidden;
+  width: 350px;
+  max-height: 100px;
+  background-color: #fff;
+  color: #333;
+  box-shadow: 4px 4px rgba(51, 51, 51, 0.6);
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 10000;
+  right: 20px;
+  top: 20px;
+}
+
+#crater-alert.show {
+  visibility: visible;
+
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+#crater-alert > .crater-grid {
+  display: -webkit-box;
+  display: box;
+}
+
+#crater-alert > .crater-grid div {
+  box-flex: 1;
+  -webkit-box-flex: 1;
+  width: 100%;
+}
+
+#crater-alert > .crater-grid div > .crater-button {
+  background-color: #ccc;
+  border: none;
+  color: #333;
+  padding: 8px 7.5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 90px;
+  margin: 2px 1px;
+  font-size: 90%;
+  cursor: pointer;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
