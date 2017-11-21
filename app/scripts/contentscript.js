@@ -50,7 +50,7 @@ function crater_ignore(key) {
 }
 
 function crater_close() {
-  document.querySelector("#crater-alert").className = ''
+  document.querySelector('#crater-alert').className = ''
 }
 
 // Utils
@@ -82,15 +82,15 @@ function main(key, value) {
         <p>
           送信したフォームデータを保存しますか？
         </p>
-        <div class="crater-grid">
+        <div class='crater-grid'>
           <div>
-            <a href="#" id="crater-create-button" class="crater-button">保存する</a>
+            <a href='#' id='crater-create-button' class='crater-button'>保存する</a>
           </div>
           <div>
-            <a href="#" id="crater-clear-button" class="crater-button">保存しない</a>
+            <a href='#' id='crater-clear-button' class='crater-button'>保存しない</a>
           </div>
           <div>
-            <a href="#" id="crater-ignore-button" class="crater-button">聞かないで</a>
+            <a href='#' id='crater-ignore-button' class='crater-button'>聞かないで</a>
           </div>
         </div>
       `
@@ -217,25 +217,43 @@ if (form) {
   })
 }
 
-chrome.storage.local.get("blocks", value => {
-  if (value && value["blocks"]) {
-    if (value["blocks"].indexOf(location.hostname) > -1) {
+chrome.storage.local.get('blocks', value => {
+  if (value && value['blocks']) {
+    if (value['blocks'].indexOf(location.hostname) > -1) {
       logger('Blocklist enabled on this site. Running...')
       function beforeUnload(event) {
-        event.returnValue = "OK";
-        return "OK"
+        event.returnValue = 'OK';
+        return 'OK'
       }
-      window.addEventListener("beforeunload", beforeUnload)
+      window.addEventListener('beforeunload', beforeUnload)
 
       if (form) {
         form.addEventListener('submit', () => {
-          window.removeEventListener("beforeunload", beforeUnload);
+          window.removeEventListener('beforeunload', beforeUnload);
         })
       }
 
-      window.addEventListener("click", (event) => {
-        console.log(event)
-      })
+      // When clicked link, ignore
+      [].forEach.call(document.querySelectorAll('a'), (w) => {
+        w.addEventListener('click', (event) => {
+          let current = event.target;
+          logger(`Detect link click event. Clicked node is ${current.nodeName}`);
+          while (current != null && current.nodeName !== 'A') {
+            const parent = current.parentNode;
+            logger(`Searching node... current is ${parent}`);
+            if (parent.querySelector('a')) {
+              current = parent.querySelector('a');
+            } else {
+              current = parent;
+            }
+          }
+          logger(`current node: ${current}`)
+          if (current && current.nodeName === 'A') {
+            logger('Clicked a link, ignore beforeunload event.');
+            window.removeEventListener('beforeunload', beforeUnload);
+          }
+        });
+      });
     }
   }
 })
