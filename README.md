@@ -56,4 +56,12 @@ Bitcoin アドレスなどを自動入力します。
 
 ### Show percentage
 
-FaucetHub.io の `/dashboard` の Wallet Balance で、現在どの程度貯まっているのか、出金手数料がどれくらいかを表示します。
+[FaucetHub.io](https://faucethub.io) の `/dashboard` の Wallet Balance に、以下の機能を追加します。
+
+* 最低出金額までいくら貯まっているかのパーセント表示を追加
+  * 出金できる場合は、上記パーセントを緑色で表示
+* 現在の残高に対する、出金手数料の表示を追加
+
+参考:
+
+![default](https://user-images.githubusercontent.com/10832834/35092034-86d691b8-fc81-11e7-8b49-1a3ed4d58711.PNG)
