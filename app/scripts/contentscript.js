@@ -2,6 +2,8 @@
 // import 'chromereload/devonly'
 import jsSHA from 'jssha'
 
+import { main as faucethubMain } from "./contentscript/faucethub";
+
 // Logger
 function logger(message) {
   if (process.env.NODE_ENV === 'development') {
@@ -148,6 +150,7 @@ const ignored = [
   '[name*=\\2fa]',      // Two factor authentication
   '[name*=\\$]',        // ...
   '[name*=remember]',   // Store login session
+  '[name=q]',           // Search query
 ]
 
 // migration
@@ -222,8 +225,12 @@ chrome.storage.local.get('blocks', value => {
     if (value['blocks'].indexOf(location.hostname) > -1) {
       logger('Blocklist enabled on this site. Running...')
       function beforeUnload(event) {
-        event.returnValue = 'OK';
-        return 'OK'
+        // Block navigation
+        logger('Sending block request...')
+        chrome.runtime.sendMessage({ action: 'block', current: location.href }, (response) => {
+          logger('Success!')
+        });
+        event.preventDefault()
       }
       window.addEventListener('beforeunload', beforeUnload)
 
@@ -233,27 +240,25 @@ chrome.storage.local.get('blocks', value => {
         })
       }
 
+      // Attached onclick event, fire it.
+      /*
+      [].forEach.call(document.querySelectorAll('*[onclick]'), (w) => {
+        w.addEventListener('click', (event) => {
+          logger('attached onclick event, ignore beforeunload event.');
+          window.removeEventListener('beforeunload', beforeUnload)
+        })
+      });
+      */
+
       // When clicked link, ignore
       [].forEach.call(document.querySelectorAll('a'), (w) => {
         w.addEventListener('click', (event) => {
-          let current = event.target;
-          logger(`Detect link click event. Clicked node is ${current.nodeName}`);
-          while (current != null && current.nodeName !== 'A') {
-            const parent = current.parentNode;
-            logger(`Searching node... current is ${parent}`);
-            if (parent.querySelector('a')) {
-              current = parent.querySelector('a');
-            } else {
-              current = parent;
-            }
-          }
-          logger(`current node: ${current}`)
-          if (current && current.nodeName === 'A') {
-            logger('Clicked a link, ignore beforeunload event.');
-            window.removeEventListener('beforeunload', beforeUnload);
-          }
+          logger('Clicked a link, ignore beforeunload event.');
+          window.removeEventListener('beforeunload', beforeUnload)
         });
       });
     }
   }
 })
+
+faucethubMain();

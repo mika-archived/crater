@@ -47,6 +47,8 @@
   "permissions": [
     "tabs",
     "storage",
+    "webRequest",
+    "webRequestBlocking",
     "<all_urls>"
   ]
 }
