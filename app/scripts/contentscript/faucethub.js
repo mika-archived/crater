@@ -1,5 +1,7 @@
 // ContentScript for FaucetHub
-const withdraws = {
+import { calcPercentage, calcWithdrawalFee } from "./utils";
+
+const withdrawals = {
   bitcoin: {
     symbol: 'BTC',
     minimum: 0.0002,
@@ -43,12 +45,12 @@ const withdraws = {
       { amount: 15.00000000, fee: 0.06000000 },
       { amount: 20.00000000, fee: 0.04000000 },
       { amount: 50.00000000, fee: 0.02000000 },
-      { amount: 100.00000000, fee: 0.01000000 }, // 51 DOGE
+      { amount: 100.00000000, fee: 0.01000000 },
       { amount: 250.00000000, fee: 0.00500000 },
       { amount: 500.00000000, fee: 0.00200000 }
     ]
   },
-  "bitcoin-cash": {
+  'bitcoin-cash': {
     symbol: 'BCH',
     minimum: 0.0002,
     fees: [
@@ -125,31 +127,32 @@ const withdraws = {
       { amount: 50.00000000, fee: 0.00050000 },
       { amount: 100.00000000, fee: 0.00020000 },
     ]
+  },
+  potcoin: {
+    symbol: 'POT',
+    minimum: 1.00000000,
+    fees: [
+      { amount: 1.00000000, fee: 0.00800000 },
+      { amount: 5.00000000, fee: 0.00600000 },
+      { amount: 10.00000000, fee: 0.00400000 },
+      { amount: 15.00000000, fee: 0.00200000 },
+      { amount: 30.00000000, fee: 0.00100000 },
+      { amount: 50.00000000, fee: 0.00050000 },
+      { amount: 100.00000000, fee: 0.00020000 }
+    ]
   }
 };
 
 const targetPages = [
   '/dashboard',
-  '/dashboard/',
-]
-
-function calcWithdrawFee(obj, balance) {
-  console.log(obj.symbol)
-  for (let kvp of obj.fees) {
-    console.log(balance)
-    console.log(kvp.amount)
-    if (balance <= kvp.amount) {
-      return kvp.fee;
-    }
-  }
-  return 0;
-}
+  '/dashboard/'
+];
 
 export function main() {
   if (location.hostname === 'faucethub.io' && targetPages.indexOf(location.pathname) >= 0) {
     const root = document.querySelector('#content > div > div > div.col-md-9.col-md-push-3 > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2)')
     let index = 1;
-    for (let key in withdraws) {
+    for (let key in withdrawals) {
       // root element
       const currency = root.querySelector(`div.col-md-4:nth-child(${index++}) > div > div`)
       if (!currency) {
@@ -158,18 +161,18 @@ export function main() {
       // Add percentage and fee on title.
       // Example:
       //  Bitcoin - 60% (fee: 0.000004 BTC)
-      //  Litecoin - 512% (fee:  0.0006 LTC)
-      const withdraw = withdraws[key];
+      //  Litecoin - 512% (fee: 0.0006 LTC)
+      const withdraw = withdrawals[key];
       const balance = 0.0 + currency.querySelector('span').innerText.split(' ')[0];
-      const percentage = ((balance / withdraw.minimum) * 100).toFixed(2);
-      const fee = calcWithdrawFee(withdraw, balance);
+      const percentage = calcPercentage(withdraw, balance);
+      const fee = calcWithdrawalFee(withdraw, balance);
 
       const content = currency.querySelector('span');
       const classes = []
       if (percentage >= 100) {
         classes.push('text-success');
       }
-      content.innerHTML += `<br><span class="${classes.join(' ')}" style="font-size: 85%">${percentage}% / fee: ${fee} ${withdraw.symbol}</span>`
+      content.innerHTML += `<br><span class="${classes.join(' ')}" style="font-size: 85%">${percentage} % / fee: ${fee} ${withdraw.symbol}</span>`
     }
   }
 }
