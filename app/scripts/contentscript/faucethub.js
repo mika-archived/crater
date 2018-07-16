@@ -24,6 +24,15 @@ const withdrawals = {
       { amount: 0.10000000, fee: 0.00025000 }
     ]
   },
+  monero: {
+    symbol: 'XMR',
+    minimum: 0.01000000,
+    fees: [
+      { amount: 0.01000000, fee: 0.00050000 },
+      { amount: 0.05000000, fee: 0.00030000 },
+      { amount: 0.10000000, fee: 0.00010000 }
+    ]
+  },
   litecoin: {
     symbol: 'LTC',
     minimum: 0.01000000,
@@ -61,6 +70,32 @@ const withdrawals = {
       { amount: 0.00250000, fee: 0.00000050 },
       { amount: 0.00500000, fee: 0.00000025 },
       { amount: 0.01000000, fee: 0.00000010 }
+    ]
+  },
+  zcash: {
+    symbol: 'ZEC',
+    minimum: 0.01000000,
+    fees: [
+      { amount: 0.01000000, fee: 0.00080000 },
+      { amount: 0.05000000, fee: 0.00060000 },
+      { amount: 0.10000000, fee: 0.00040000 },
+      { amount: 0.15000000, fee: 0.00020000 },
+      { amount: 0.20000000, fee: 0.00010000 },
+      { amount: 0.50000000, fee: 0.00005000 },
+      { amount: 1.00000000, fee: 0.00002000 }
+    ]
+  },
+  digibyte: {
+    symbol: 'DGB',
+    minimum: 1.00000000,
+    fees: [
+      { amount: 1.00000000, fee: 0.00800000 },
+      { amount: 1.50000000, fee: 0.00600000 },
+      { amount: 2.00000000, fee: 0.00400000 },
+      { amount: 5.00000000, fee: 0.00200000 },
+      { amount: 10.00000000, fee: 0.00100000 },
+      { amount: 25.00000000, fee: 0.00050000 },
+      { amount: 50.00000000, fee: 0.00020000 }
     ]
   },
   bitcore: {
