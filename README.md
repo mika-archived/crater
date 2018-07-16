@@ -1,12 +1,18 @@
 # "Crater" - Efficiency tools for cryptocurrency faucets.
 
-Faucet (蛇口) 巡りを便利にするための Google Chrome 拡張機能です。 
-拡張機能内で登録されたウェブサイトでのみ使用可能です。
+Improve websites experience that cryptocurrencies faucet services.
 
 
-## 機能 (WIP)
+## Features
 
-* アドレスの自動入力
-* 最低出金額に対する割合表示
-* 現在の出金手数料表示
+Crater supports some websites.
 
+
+### FaucetHub.io
+
+* Show percentage of current balance for minimum withdrawal amount
+* Show withdrawal fee for current balance
+
+#### Image
+
+<img src="https://user-images.githubusercontent.com/10832834/42744879-900808e6-890a-11e8-9d58-3ca61983bb36.PNG" width="450" />
